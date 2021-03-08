@@ -1,13 +1,21 @@
+# Main imports.
 import re
 
 def preprocess_filter(sentList):
+	'''
+	:param list of sentences: list of sentences from the queries or documents.
+    :return: the the input list with filtered sentences.
+    :rt list
+    '''
+
 	# Stores all the filter sentences
 	alphaStrings = []
 
 	for sen in sentList:
 
 	    # Removing html tags
-		sentence = remove_tags(sen)
+		TAG_RE = re.compile(r'<[^>]+>')
+		sentence = TAG_RE.sub('', sen)
 
 		# Remove stop words
 		with open('./assets/stop_words.txt', 'r') as f:
@@ -35,8 +43,3 @@ def preprocess_filter(sentList):
 		alphaStrings.append(sentence)
 
 	return alphaStrings
-
-TAG_RE = re.compile(r'<[^>]+>')
-
-def remove_tags(text):
-    return TAG_RE.sub('', text)

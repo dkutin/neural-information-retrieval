@@ -1,5 +1,7 @@
+# Main imports.
 import nltk
 import types
+
 # Import specific packages.
 from preprocess import preprocess_filter
 from nltk.corpus import stopwords
