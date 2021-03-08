@@ -1,7 +1,7 @@
 import nltk
 import types
 # Import specific packages.
-from preprocess import numRemoval,preprocess_text
+from preprocess import preprocess_filter
 from nltk.corpus import stopwords
 from scipy import spatial
 from sent2vec.vectorizer import Vectorizer
@@ -26,7 +26,7 @@ def main():
 	print('dist_1: {0}, dist_2: {1}'.format(dist_1, dist_2))
 	# dist_1: 0.043, dist_2: 0.192
 
-	print(preprocess_text(sentences))
+	print(preprocess_filter(sentences))
 	
 
 	tweet_list = dict()

@@ -1,6 +1,6 @@
 import re
 
-def preprocess_text(sentList):
+def preprocess_filter(sentList):
 	# Stores all the filter sentences
 	alphaStrings = []
 
