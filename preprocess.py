@@ -13,7 +13,7 @@ def preprocess_filter(sentList):
 
 	for sen in sentList:
 
-	    # Removing html tags
+	    	# Removing html tags
 		TAG_RE = re.compile(r'<[^>]+>')
 		sentence = TAG_RE.sub('', sen)
 
@@ -27,19 +27,19 @@ def preprocess_filter(sentList):
 		# Remove links
 		sentence = re.sub(r'http\S+', '', sentence)
 
-	    # Remove numbers
+	    	# Remove numbers
 		sentence = re.sub(r'[0-9]', '', sentence)
 
 		# Remove punctuation
 		sentence = re.sub(r'[^\w\s]', '', sentence)
 
-	    # Single character removal
+	    	# Single character removal
 		sentence = re.sub(r"\s+[a-zA-Z]\s+", ' ', sentence)
 
-	    # Removing multiple spaces
+	    	# Removing multiple spaces
 		sentence = re.sub(r'\s+', ' ', sentence)
 
-	    # Add the filter sentence to a list.
+	    	# Add the filter sentence to a list.
 		alphaStrings.append(sentence)
 
 	return alphaStrings
