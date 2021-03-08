@@ -4,9 +4,9 @@ import re
 def preprocess_filter(sentList):
 	'''
 	:param list of sentences: list of sentences from the queries or documents.
-    :return: the the input list with filtered sentences.
-    :rt list
-    '''
+    	:return: the the input list with filtered sentences.
+    	:rt list
+    	'''
 
 	# Stores all the filter sentences
 	alphaStrings = []
