@@ -1,5 +1,19 @@
 # Main imports.
 import re
+import nltk
+
+# Import specific packages.
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.stem.porter import PorterStemmer
+
+# Download packages if not installed locally.
+nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('stem.porter')
+
+# Initialize stemmer
+ps = PorterStemmer()
 
 def importTweets():
     ''' 
@@ -43,7 +57,7 @@ def importQuery():
 
     return query_list
 
-def filterSentence(sen):
+def filterSentence(sen, str = False):
 	'''
 	:param list of sentences: list of sentences from the queries or documents.
 	:return: the the input list with filtered sentences.
@@ -76,5 +90,22 @@ def filterSentence(sen):
     # Removing multiple spaces
 	sentence = re.sub(r'\s+', ' ', sentence)
 
+	# Create tokens and Stem the words.
+	tokens = [ps.stem(word.lower()) for word in word_tokenize(sentence)]
 
-	return sentence
+	if(str == True):
+		return listToString(tokens)
+	else:
+		return tokens
+
+def listToString(s):  
+    
+    # initialize an empty string 
+    str1 = ""  
+    
+    # traverse in the string   
+    for ele in s:  
+        str1 += ele + " "  
+    
+    # return string   
+    return str1
