@@ -3,7 +3,7 @@ import nltk
 import types
 
 # Import specific packages.
-from preprocess import filterSentence
+from preprocess import importTweets
 from nltk.corpus import stopwords
 from scipy import spatial
 from sent2vec.vectorizer import Vectorizer
@@ -18,17 +18,19 @@ def main():
 	    "We can interchangeably use embedding, encoding, or  http://url.com/bla1/blah1/ vectorizing.",
 	    "ReThink Group positive in outlook: Technology staffing specialist the ReThink Group expects revenues to be marg... https://bit.ly/hFjtmY"
 	]
+	# Load the tweet list.
+    # {'34952194402811904': 'Save BBC World Service from Savage Cuts http://www.petitionbuzz.com/petitions/savews', ...}
+	tweets = importTweets()
+	print(tweets)
 
-	vectorizer = Vectorizer()
-	vectorizer.bert(sentences)
-	vectors_bert = vectorizer.vectors
+	# vectorizer = Vectorizer()
+	# vectorizer.bert(sentences)
+	# vectors_bert = vectorizer.vectors
 
-	dist_1 = spatial.distance.cosine(vectors_bert[0], vectors_bert[1])
-	dist_2 = spatial.distance.cosine(vectors_bert[0], vectors_bert[2])
-	print('dist_1: {0}, dist_2: {1}'.format(dist_1, dist_2))
+	# dist_1 = spatial.distance.cosine(vectors_bert[0], vectors_bert[1])
+	# dist_2 = spatial.distance.cosine(vectors_bert[0], vectors_bert[2])
+	# print('dist_1: {0}, dist_2: {1}'.format(dist_1, dist_2))
 	# dist_1: 0.043, dist_2: 0.192
-
-	print(filterSentence("Thishttp://url.com/bla1/blah1/ is an awe3some  t book to  whereby learn NLP."))
 
 if __name__ == "__main__":
     main()
