@@ -1,6 +1,13 @@
 # Main imports.
 import nltk
 import types
+# Import specific packages.
+from nltk.tokenize import word_tokenize
+from nltk.stem.porter import PorterStemmer
+
+# Download packages if not installed locally.
+nltk.download('stopwords')
+nltk.download('punkt')
 
 # Import specific packages.
 from preprocess import importTweets,importQuery
@@ -20,10 +27,13 @@ def main():
 	]
 	# Load the tweet list.
     # {'34952194402811904': 'Save BBC World Service from Savage Cuts ', ...}
-	tweets = importTweets()
+	tweets = importTweets(True)
 	#print(tweets)
-	queries = importQuery()
+	queries = importQuery(True)
 
+	# for tkey, tvalue in tweets.items():
+	# 	for qkey, qvalue in queries.items():
+	#print(filterSentence("Save BBC World Service from Savage Cuts http://www.petitionbuzz.com/petitions/savews", True))
 	# vectorizer = Vectorizer()
 	# vectorizer.bert(sentences)
 	# vectors_bert = vectorizer.vectors

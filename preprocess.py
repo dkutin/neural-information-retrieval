@@ -15,7 +15,7 @@ nltk.download('stem.porter')
 # Initialize stemmer
 ps = PorterStemmer()
 
-def importTweets():
+def importTweets(bertMode = False):
     ''' 
     Import tweets from collection.
 
@@ -30,11 +30,11 @@ def importTweets():
     for tweet in tweets:
         key, value = tweet.split('\t')
         # Tokenize each tweet, and put back in list.
-        tweet_list[key] = filterSentence(value)
+        tweet_list[key] = filterSentence(value,bertMode)
 
     return tweet_list
 
-def importQuery():
+def importQuery(bertMode = False):
     ''' 
     Import query from collection.
 
@@ -52,12 +52,12 @@ def importQuery():
     current_tweet = 1
     for x in queryCheck:
         save = x[x.index('<title>'): x.index('</title>')].strip('<title> ')
-        query_list[current_tweet] = filterSentence(save)
+        query_list[current_tweet] = filterSentence(save,bertMode)
         current_tweet+=1
 
     return query_list
 
-def filterSentence(sen, str = False):
+def filterSentence(sen, bertMode = False):
 	'''
 	:param list of sentences: list of sentences from the queries or documents.
 	:return: the the input list with filtered sentences.
@@ -93,7 +93,7 @@ def filterSentence(sen, str = False):
 	# Create tokens and Stem the words.
 	tokens = [ps.stem(word.lower()) for word in word_tokenize(sentence)]
 
-	if(str == True):
+	if(bertMode == True):
 		return listToString(tokens)
 	else:
 		return tokens
