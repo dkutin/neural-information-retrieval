@@ -20,6 +20,29 @@ def importTweets():
 
     return tweet_list
 
+def importQuery():
+    ''' 
+    Import query from collection.
+
+    :param boolean verbose: [Optional] Provide printed output of tokens for testing.
+    :return: the tokenized list of queries.
+    :rtype: list
+    '''
+    query_list = dict()
+
+    with open('./assets/test_queries.txt', 'r') as file:
+        fileContents = file.read()
+
+    queryCheck = fileContents.strip('\n').split('\n\n')
+
+    current_tweet = 1
+    for x in queryCheck:
+        save = x[x.index('<title>'): x.index('</title>')].strip('<title> ')
+        query_list[current_tweet] = filterSentence(save)
+        current_tweet+=1
+
+    return query_list
+
 def filterSentence(sen):
 	'''
 	:param list of sentences: list of sentences from the queries or documents.

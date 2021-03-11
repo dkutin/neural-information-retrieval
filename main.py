@@ -3,7 +3,7 @@ import nltk
 import types
 
 # Import specific packages.
-from preprocess import importTweets
+from preprocess import importTweets,importQuery
 from nltk.corpus import stopwords
 from scipy import spatial
 from sent2vec.vectorizer import Vectorizer
@@ -19,9 +19,10 @@ def main():
 	    "ReThink Group positive in outlook: Technology staffing specialist the ReThink Group expects revenues to be marg... https://bit.ly/hFjtmY"
 	]
 	# Load the tweet list.
-    # {'34952194402811904': 'Save BBC World Service from Savage Cuts http://www.petitionbuzz.com/petitions/savews', ...}
+    # {'34952194402811904': 'Save BBC World Service from Savage Cuts ', ...}
 	tweets = importTweets()
-	print(tweets)
+	#print(tweets)
+	queries = importQuery()
 
 	# vectorizer = Vectorizer()
 	# vectorizer.bert(sentences)
