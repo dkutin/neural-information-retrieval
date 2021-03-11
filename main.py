@@ -3,7 +3,7 @@ import nltk
 import types
 
 # Import specific packages.
-from preprocess import preprocess_filter
+from preprocess import filterSentence
 from nltk.corpus import stopwords
 from scipy import spatial
 from sent2vec.vectorizer import Vectorizer
@@ -28,18 +28,7 @@ def main():
 	print('dist_1: {0}, dist_2: {1}'.format(dist_1, dist_2))
 	# dist_1: 0.043, dist_2: 0.192
 
-	print(preprocess_filter(sentences))
-	
-
-	tweet_list = dict()
-	tweets = (line.strip('\n') for line in open('./assets/tweet_list.txt', 'r', encoding='utf-8-sig'))
-
- #    # Build the dictionary.
-	# for tweet in tweets:
-	# 	key, value = tweet.split('\t')
- #        # Tokenize each tweet, and put back in list.
-	# 	tweet_list[key] = filterSentence(value, verbose)
-	# print(tweet_list)
+	print(filterSentence("Thishttp://url.com/bla1/blah1/ is an awe3some  t book to  whereby learn NLP."))
 
 if __name__ == "__main__":
     main()
