@@ -8,9 +8,14 @@ from nltk.tokenize import word_tokenize
 from nltk.stem.porter import PorterStemmer
 
 # Download packages if not installed locally.
-nltk.download('stopwords')
-nltk.download('punkt')
-nltk.download('stem.porter')
+# nltk.download('stopwords')
+# nltk.download('punkt')
+# nltk.download('stem.porter')
+
+# Main imports.
+import string
+import json
+import math
 
 # Initialize stemmer
 ps = PorterStemmer()
@@ -97,6 +102,47 @@ def filterSentence(sen, bertMode = False):
 		return listToString(tokens)
 	else:
 		return tokens
+
+def filterSentence1(sentence, bertMode = False):
+    ''' 
+    Step 1: Filters sentences from tweets and queries.
+
+    TODO: Filter URLS, Non-english characters, punctuation embedded in words, and unicode characters. 
+
+    :param str sentence: The sentence to be tokenized with stopwords and punctuation removed.
+    :param boolean verbose: [Optional] Provide printed output of tokens for testing.
+    :return: the tokenized sentence.
+    :rtype: list
+    '''
+    # Custom Stopwords that are NOT defined in Library or Provided Stopwords
+    edge_stopwords = ['n\'t', '\'d', 'http', 'https', '//', '...']
+
+    # Build a final list of stopwords
+    custom_stopwords = set(stopwords.words('english')).union((line.strip('\r\n') for line in open('./assets/stop_words.txt', 'r'))).union(edge_stopwords)
+
+    # Create tokens
+    tokens = [ps.stem(word.lower()) for word in word_tokenize(sentence)
+        if word.lower() not in custom_stopwords and
+            word not in string.punctuation and
+            not isNumeric(word)]
+
+    if(bertMode == True):
+        return listToString(tokens)
+    else:
+        return tokens
+
+def isNumeric(subj):
+    ''' 
+    Check if a string contains numerical values.
+
+    :param str subj: the string to be converted
+    :return: True if a subject string is a number, False otherwise.
+    :rtype: boolean
+    '''
+    try:
+        return float(subj)
+    except Exception:
+        return False
 
 def listToString(s):  
     
