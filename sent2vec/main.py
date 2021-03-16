@@ -23,7 +23,7 @@ def main():
     print("\n Preprocessing Done! \n")
     print("\n Retrieval and Ranking... \n")
     # Get length of query.
-    ranking = retrieve(query_file, index, document_length, TRUE)
+    ranking = retrieve(query_file, index, document_length, True)
 
     print("\n Retrieval and Ranking Done! \n")
 
