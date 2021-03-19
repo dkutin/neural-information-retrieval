@@ -1,5 +1,6 @@
 # Main imports.
 import string
+import re
 import json
 import nltk
 import math
@@ -47,7 +48,7 @@ def importTweets(verbose = False):
     for tweet in tweets:
         key, value = tweet.split('\t')
         # Tokenize each tweet, and put back in list.
-        tweet_list[key] = filterSentence(value, verbose)
+        tweet_list[key] = filterSentence(value)
 
     return tweet_list
 
@@ -75,35 +76,51 @@ def importQuery(verbose = False):
 
     return query_list
 
-def filterSentence(sentence, verbose = False):
-    ''' 
-    Step 1: Filters sentences from tweets and queries.
+def filterSentence(sen):
+	'''
+	:param list of sentences: list of sentences from the queries or documents.
+	:return: the the input list with filtered sentences.
+	:rt string
+	'''
 
-    TODO: Filter URLS, Non-english characters, punctuation embedded in words, and unicode characters. 
+    # Removing html tags
+	TAG_RE = re.compile(r'<[^>]+>')
+	sentence = TAG_RE.sub('', sen)
 
-    :param str sentence: The sentence to be tokenized with stopwords and punctuation removed.
-    :param boolean verbose: [Optional] Provide printed output of tokens for testing.
-    :return: the tokenized sentence.
-    :rtype: list
-    '''
-    # Custom Stopwords that are NOT defined in Library or Provided Stopwords
-    edge_stopwords = ['n\'t', '\'d', 'http', 'https', '//', '...']
+	# Remove stop words
+	with open('./assets/stop_words.txt', 'r') as f:
+		stopWords = [line.strip() for line in f]
+	sentWords = sentence.split()
+	nonStopwords  = [word for word in sentWords if word.lower() not in stopWords]
+	sentence = ' '.join(nonStopwords)
 
-    # Build a final list of stopwords
-    custom_stopwords = set(stopwords.words('english')).union((line.strip('\r\n') for line in open('./assets/stop_words.txt', 'r'))).union(edge_stopwords)
+	# Remove links
+	sentence = re.sub(r'http\S+', '', sentence)
 
-    # Create tokens
-    tokens = [ps.stem(word.lower()) for word in word_tokenize(sentence)
-        if word.lower() not in custom_stopwords and
-            word not in string.punctuation and
-            not isNumeric(word)]
+    # Remove numbers
+	sentence = re.sub(r'[0-9]', '', sentence)
 
-    if verbose:
-        print('\n Testing string: \n\n\t ' + sentence + '\n')
-        print(' Tokenized:\n')
-        print('\t' + '[%s]' % ', '.join(map(str, tokens)) + '\n')
+	# Remove punctuation
+	sentence = re.sub(r'[^\w\s]', '', sentence)
 
-    return tokens
+    # Single character removal
+	sentence = re.sub(r"\s+[a-zA-Z]\s+", ' ', sentence)
+
+    # Removing multiple spaces
+	sentence = re.sub(r'\s+', ' ', sentence)
+
+	# Create tokens and Stem the words.
+	tokens = [ps.stem(word.lower()) for word in word_tokenize(sentence)]
+
+    # initialize an empty string 
+    sentence = ""  
+    
+    # traverse in the string   
+    for token in tokens:  
+        sentence += token + " "  
+    
+    # return string   
+    return sentence
 
 def buildIndex(documents, verbose = False):
     ''' 

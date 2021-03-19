@@ -9,3 +9,6 @@
 
 # Ignore python files
 __pycache__/
+
+# Ignore generated files.
+encoder/
