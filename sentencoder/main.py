@@ -12,6 +12,7 @@ from write import resultFileCreation
 
 nltk.download('punkt')
 
+USE_CUDA = False
 V = 1
 MODEL_PATH = 'encoder/infersent%s.pkl' % V
 W2V_PATH = 'GloVe/glove.840B.300d.txt'
@@ -55,6 +56,9 @@ def main():
 
     # Load Infersent v1 Model Encoder.
     infersent.load_state_dict(torch.load(MODEL_PATH))
+
+    # Use GPU Mode
+    infersent = infersent.cuda() if USE_CUDA else infersent
 
     # Load Pre-trained GloVe Model.
     infersent.set_w2v_path(W2V_PATH)
