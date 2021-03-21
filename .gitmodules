@@ -1,3 +1,0 @@
-[submodule "sentencoder/sentencoder/GloVe"]
-	path = sentencoder/GloVe
-	url = git@github.com:stanfordnlp/GloVe.git

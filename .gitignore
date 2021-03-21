@@ -10,5 +10,6 @@
 # Ignore python files
 __pycache__/
 
-# Ignore generated files.
-encoder/
+# Ignore ML Training Data.
+sentencoder/encoder
+sentencoder/GloVe

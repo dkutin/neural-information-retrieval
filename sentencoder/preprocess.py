@@ -18,8 +18,12 @@ nltk.download('stem.porter')
 # Initialize stemmer
 ps = PorterStemmer()
 
+# Remove stop words
+with open('../assets/stop_words.txt', 'r') as f:
+	stopWords = [line.strip() for line in f]
+
 def isNumeric(subj):
-    ''' 
+    '''
     Check if a string contains numerical values.
 
     :param str subj: the string to be converted
@@ -32,7 +36,7 @@ def isNumeric(subj):
         return False
 
 def importTweets(verbose = False):
-    ''' 
+    '''
     Import tweets from collection.
 
     :param boolean verbose: [Optional] Provide printed output of tokens for testing.
@@ -41,8 +45,7 @@ def importTweets(verbose = False):
     '''
     tweet_list = dict()
     # Splits tweet list at newline character.
-    # tweets = (line.strip('\n') for line in open('./assets/tweet_list.txt', 'r', encoding='utf-8-sig'))
-    tweets = (line.strip('\n') for line in open('./assets/tweet_list.txt', 'r', encoding='utf-8-sig'))
+    tweets = (line.strip('\n') for line in open('../assets/tweet_list.txt', 'r', encoding='utf-8-sig'))
 
     # Build the dictionary.
     for tweet in tweets:
@@ -54,7 +57,7 @@ def importTweets(verbose = False):
 
 
 def importQuery(verbose = False):
-    ''' 
+    '''
     Import query from collection.
 
     :param boolean verbose: [Optional] Provide printed output of tokens for testing.
@@ -63,7 +66,7 @@ def importQuery(verbose = False):
     '''
     query_list = dict()
 
-    with open('./assets/test_queries.txt', 'r') as file:
+    with open('../assets/test_queries.txt', 'r') as file:
         fileContents = file.read()
 
     queryCheck = fileContents.strip('\n').split('\n\n')
@@ -71,7 +74,7 @@ def importQuery(verbose = False):
     current_tweet = 1
     for x in queryCheck:
         save = x[x.index('<title>'): x.index('</title>')].strip('<title> ')
-        query_list[current_tweet] = filterSentence(save, verbose)
+        query_list[current_tweet] = filterSentence(save)
         current_tweet+=1
 
     return query_list
@@ -87,9 +90,6 @@ def filterSentence(sen):
 	TAG_RE = re.compile(r'<[^>]+>')
 	sentence = TAG_RE.sub('', sen)
 
-	# Remove stop words
-	with open('./assets/stop_words.txt', 'r') as f:
-		stopWords = [line.strip() for line in f]
 	sentWords = sentence.split()
 	nonStopwords  = [word for word in sentWords if word.lower() not in stopWords]
 	sentence = ' '.join(nonStopwords)
@@ -111,72 +111,11 @@ def filterSentence(sen):
 
 	# Create tokens and Stem the words.
 	tokens = [ps.stem(word.lower()) for word in word_tokenize(sentence)]
+	sent = ""
 
-    # initialize an empty string 
-    sentence = ""  
-    
-    # traverse in the string   
-    for token in tokens:  
-        sentence += token + " "  
-    
-    # return string   
-    return sentence
+	# traverse in the string
+	for token in tokens:
+		sent += token + " "
 
-def buildIndex(documents, verbose = False):
-    ''' 
-    Step 2: Filters sentences from tweets and queries.
-
-    :param list documents: Documents obtained from the preprocessing module
-    :param boolean verbose: [Optional] Provide printed output of tokens for testing.
-    :return: An inverted index for fast access
-    :rtype: dict
-    '''
-    # Initialize returned index
-    inverted_index = dict()
-
-    word_idf = dict()
-  
-    # Store the frequency of each word in each document.
-    for index, document in documents.items():
-        for token in document:
-            if token not in inverted_index:
-                inverted_index[token] = {}
-            if token in inverted_index and index not in inverted_index[token]:
-                inverted_index[token][index] = 1
-            elif index in inverted_index[token]:
-                inverted_index[token][index] += 1
-
-    # Calulating the idf for all words in all Document.
-    for token, current_document in inverted_index.items():
-        total_occurence = 0
-        for document, occurence in current_document.items():
-            total_occurence += occurence
-
-        word_idf[token] = round(math.log((len(documents) / total_occurence), 2), 3)
-
-    # Calculating the tf-idf for the words within the Documents
-    for token, document_info in inverted_index.items():
-        for document, occurence in document_info.items():
-            document_info[document] = occurence * word_idf[token]
-
-    if verbose:
-        print("\r Inverted Index")
-        print(json.dumps(inverted_index, indent = 2))
-        print("-" * 40)
-
-    return inverted_index
-
-def lengthOfDocument(inverted_index, tweets, verbose = False):
-    document_lengths = dict()
-
-    for tweet_id, tweet in tweets.items():
-        document_length = 0
-        for token in tweet:
-            document_length += pow(inverted_index[token][tweet_id], 2)
-
-        document_lengths[tweet_id] = round(math.sqrt(document_length), 3)
-
-    if verbose:
-        print('Length of documents', document_lengths)
-
-    return document_lengths
+	# return string
+	return sent
