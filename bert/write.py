@@ -5,11 +5,11 @@ from prettytable import PrettyTable
 # Ordered Ranking[query_no] = {d1 : cosSim, d2 : cosSim, ...}
 def resultFileCreation(Rankings, Bert = False):
     # File path of the saved file
-    file_path = "../dist/results.txt"
+    file_path = "../dist/bert/bert_results.txt"
 
     # Rename the file when working with the Bert results
     if (Bert == True):
-        file_path = "../dist/bert_results.txt"
+        file_path = "../dist/bert/bert_results.txt"
 
     # Check if the results file exists
     if(path.exists(file_path) == False):

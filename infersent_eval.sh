@@ -1,1 +1,0 @@
-./lib/trec_eval assets/qrels.txt dist/infersent_results.txt >> infersent_trec_eval.txt

@@ -5,7 +5,7 @@ from tqdm import tqdm
 from nltk.corpus import stopwords
 
 # File Import
-from bert_preprocess import importTweets,importQuery
+from preprocess import importTweets,importQuery
 from write import resultFileCreation
 
 def bert_main():
