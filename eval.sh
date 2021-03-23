@@ -24,6 +24,7 @@ while getopts 'fq:r:d:' flag; do
     esac
 done
 
+d
 if [[ ! -e "$RESULTS" ]]
 then
     echo "$RESULTS does not exist."
