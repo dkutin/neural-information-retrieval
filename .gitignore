@@ -11,5 +11,5 @@
 __pycache__/
 
 # Ignore ML Training Data.
-sentencoder/encoder
-sentencoder/GloVe
+infersent/encoder
+infersent/GloVe

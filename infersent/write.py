@@ -4,8 +4,9 @@ from prettytable import PrettyTable
 
 # Ordered Ranking[query_no] = {d1 : cosSim, d2 : cosSim, ...}
 def resultFileCreation(Rankings):
+    filename = "../dist/infersent/infersent_results.txt"
     # Check if the results.txt file exists
-    if(path.exists("./dist/Results.txt") == False):
+    if(path.exists(filename) == False):
         # Initialize the object passing the table headers
         rTable = PrettyTable(['Topic_id','Q0', 'docno','rank','score','tag'])
         # Align the table to the left of the txt file.
@@ -31,7 +32,7 @@ def resultFileCreation(Rankings):
         table_text = rTable.get_string()
 
         # Write table to the file after populating the table.
-        f = open("./dist/Results.txt","w+")
+        f = open(filename,"w+")
         f.write(table_text)
 
         # Close Results.txt file.
@@ -39,5 +40,4 @@ def resultFileCreation(Rankings):
         return
     # Remove file if Results.txt file exists and recall the function.
     else:
-        os.remove("./dist/Results.txt")
-        resultFileCreation(Rankings)
+        print("File exists... Aborting write.")

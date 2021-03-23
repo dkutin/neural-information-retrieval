@@ -67,34 +67,53 @@ def main():
 
     print("\n Building Vocabulary from Tweets... \n")
 
+    # Deconstruct the dictionary of Documents to Document ID, and Document Contents.
     tweets = list(tweets_dict.values())
+    tweet_ids = list(tweets_dict.keys())
+
+    # Deconstruct the dictionary of Queries to Query Contents, since we can replicate Query ID.
+    queries = list(queries_dict.values())
+
+    # Build the Infersent Vocabulary based on all the Documents' Contents.
     infersent.build_vocab(tweets, tokenize=False)
 
     print("\n Vocabulary Completed! \n")
 
-    print("\n Retrieval and Ranking... \n")
-    embeddings = infersent.encode(tweets, bsize=128, tokenize=False, verbose=True)
+    print("\n Building Document & Query Vectors... \n")
 
-    current_query = 1
-    for query_id, query in queries_dict.items():
-        dranking = dict()
-        for document_id, tweet in tweets_dict.items():
+    doc_embeddings = infersent.encode(tweets, bsize=128, tokenize=False, verbose=True)
+    query_embeddings = infersent.encode(queries, bsize=128, tokenize=False, verbose=True)
+
+    print("\n Building Document & Query Vectors Done! \n")
+
+    print("\n Retrieval and Ranking... \n")
+
+    dranking = dict()
+
+    for query_id in range(len(queries)):
+        print (dranking)
+        # Encoded array starts at 0 for first chronological document.
+        current_document = 0
+
+        # Calculate the Cosine Similarity between the current Query, and corpus of Documents.
+        for tweet_id in tweet_ids:
             # Calculate the Cossine Sim
-            dranking[document_id] = cosine(infersent.encode([tweet])[0], infersent.encode([query])[0])
+            dranking[tweet_id] = cosine(
+                doc_embeddings[current_document],
+                query_embeddings[query_id]
+            )
+            current_document += 1
 
         # Put the ranking of Documents in Descending order into ranking.
-        ranking[query_id] = {k: v for k, v in sorted(dranking.items(), key=lambda dranking: dranking[1], reverse=True)[:1000]}
+        ranking[query_id + 1] = {k: v for k, v in sorted(dranking.items(), key=lambda dranking: dranking[1], reverse=True)[:1000]}
 
-        print ("Query " + str(current_query) + " Done.")
-        current_query += 1
-
-    print("\n Retrieval and Ranking Done! \n")
-
-    print("\n Creating Result File... \n")
+        # Create the resulting file.
+        print ("Query " + str(query_id) + " Done.")
+        dranking.clear()
 
     resultFileCreation(ranking)
 
-    print("\n File Creation Done! Find the results in ./dist/Results.txt for further eval. \n")
+    print("\n Retrieval and Ranking Done! \n")
 
 if __name__ == "__main__":
     main()

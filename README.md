@@ -13,7 +13,7 @@ Joshua O Erivwo - 8887065
 ## Task Distribution
 
 Dmitry Kutin
-- IR Model reused from Assignment 1, using a *sent2vec* implementation.
+- IR Model reused from Assignment 1, using a *InferSent* (sent2vec) implementation.
 
 Dilanga Algama
 - 
