@@ -44,8 +44,3 @@ fi
 
 ## Run the evaluation script.
 ./lib/trec_eval $FULL_EVAL $QRELS $RESULTS >> $DESTINATION
-
-# if [[ $1 == "--full-eval" || $1 == "-f" ]]
-# then
-#     FULL_EVAL="-q"
-# fi
