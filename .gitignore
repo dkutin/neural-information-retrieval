@@ -1,0 +1,15 @@
+# Ignore Mac files
+*.DS_Store
+*.pyc
+
+# Ignore vscode
+*.code-workspace
+*.vs-code
+.vscode/
+
+# Ignore python files
+__pycache__/
+
+# Ignore ML Training Data.
+infersent/encoder
+infersent/GloVe
