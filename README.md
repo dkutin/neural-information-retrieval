@@ -38,15 +38,15 @@ We import both the data files, one with the test queries and the other with the 
 
 We use a BERT model to embed the Query and Document words (tweets) within each sentence. This step is done in batches to soften the load on the CPU when running the whole data set, especially for the 40,000+ documents.
 
-We calculate the CosSim similarity using the Cosine similairty calculator from the Scipy dictionary to calculate the CosSim for the tweets, to find their similarity score to the query. We order the tweets in a dictionary from highest to lowest similarity score and pass this information to step 4.
+We calculate the CosSim similarity using the Cosine similairty calculator from the `Scipy` dictionary to calculate the CosSim for the tweets, to find their similarity score to the query. We order the tweets in a dictionary from highest to lowest similarity score and pass this information to step 4.
 
-We organize the data created from step 3 and writes the information of the top 1000 for each query in the right order to a `.txt` file (`dist/bert/bert_results.txt`).
+We organize the data created from step 3 and write the information of the top 1000 for each query in the right order to a `.txt` file (`dist/bert/bert_results.txt`).
 
 #### Discussion (Compared to Assignment 1)
 
 Our BERT program did not perform as well as our results in Assignment 1, scoring a `P@10` TREC score of `0.1769` in comparison to `0.1833` which was the score we got for Assignment 1. The `MAP` value for Assignment 1 was `0.1679` and the BERT approach MAP value is `0.0880`. We belive this makes sense due to how BERT calculates the similairity of the different sentences. Firstly, BERT's evaluation changes based on the sequence or order of the words in the sentecen since it looks as the words beside the word, on the left and right during the evaluation, whereas in Assignment 1 the order didn't matter. As long as the document had all the words the query had, it was consider 100% similar, specailly when calculation the cosine similarity. This is the biggest reason we came to based on the final results.
 
-Furthermore there is always possibilities the model misinterpreted the words within the sentences as other developers have mentioned when using the BERT model. Where the BERT approach may result in good scores but its sensitivitly of the answer or understanding in a commonsense scenario as not the same as a person would have when creating the whole picture.
+Furthermore, there is always possibilities the model misinterpreted the words within the sentences as other developers have mentioned when using the BERT model. Where the BERT approach may result in good scores but its sensitivitly of the answer or understanding in a commonsense scenario is not the same as a person would have when creating the whole picture for the system.
 
 #### Algorithms and Datastructures
 
@@ -123,7 +123,7 @@ Run the following code below in the terminal to download the libaries:
 ##### Run the program
 - To run the BERT approach, call the `main.py` file inside the `/bert` folder after set up steps have been completed with `python3 main.py`
 
-### InferSent (Approach 2 - Dmitry Kutin) 
+### InterSent (Approach 2 - Dmitry Kutin) 
 
 #### Functionality
 
