@@ -6,9 +6,9 @@ https://www.site.uottawa.ca/~diana/csi4107/A2_2021/A2_2021.htm
 
 ## Group Members
 
-Dmitry Kutin - 300015920
-Dilanga Algama - 8253677
-Joshua O Erivwo - 8887065
+**Dmitry Kutin - 300015920**
+**Dilanga Algama - 8253677**
+**Joshua O Erivwo - 8887065**
 
 ## Task Distribution
 
@@ -52,13 +52,13 @@ Furthermore there is always possibilities the model misinterpreted the words wit
 
 Our implementation of the information retrieval system was based on the guidelines provided in assignment 2. The bert folder contains four python files containing the functions used in implementing BERT Neural IR system.
 
-##### Project Specific Files
+#### Project Specific Files
 
-###### `main.py`:
+##### `main.py`:
 In the `main()` function, we started by importing the important functions that were used for implementing the IR system. The first step was to import the tweets and the queries from the `assert folder`. By importing the tweets and queries from the `asset folder`, `step1: preprocessing` was being done using the `filterSentence` that was implemented directly in the `import` function. After importing the tweets and queries from the text and then filtering them.
 Next, 'step2: word embedding' is done where we embed the words from the queries and documents with the BERT model. Once the embedding is done we calculate the Cosine Similarity scores for the word embedded Documents and Queries. To understand what was happening in the `main()` function, we created a set of print statements that would notify the user when the preprocessing and the embedding of the document and queries are done. The user then gets informed of the creation of the BERT result file. 
 
-###### `preprocess.py`:
+##### `preprocess.py`:
  This file contains the process of developing `step1:Preprocessing` using python. Below are the functions implemented in the `preprocess.py`
 
  - importTweets(bertMode = False): imports the tweets from the collection. We first started by opening the text files, then we filter the file using our filterSentence function. The bertMode variable is for then thw filterSentence function is called.
@@ -69,12 +69,12 @@ Next, 'step2: word embedding' is done where we embed the words from the queries 
 
  - listToString(list): Converts a list of words into a string.
 
-###### `write.py`:
+##### `write.py`:
   This file contains the procedure for implementing `step4`. The function creates a table for each of the results generated in the `bert_results.py` and then stores it in the `dist/bert folder` as a text file.
 
-##### Additional Libraries
+#### Additional Libraries
 
-###### Prettytable (`prettytable.py`):  
+##### Prettytable (`prettytable.py`):  
 A helper library to format the output for the `Results.txt` file. Used in the implementation of the `write.py`.
 
 #### Results for Query 3 & 20
@@ -149,15 +149,15 @@ InferSent uses a pretrained model of 300 feature dimensions, allowing for better
 
 We also saw an increase in similarity scores between query and document vectors, with an average confidence of the top 5 queries hovering at `0.9` similarity score, and the lowest being no lower than `0.5`, compared to our Assignment 1 implementation which had provided no consistency in similarity scores often ranging from `0.1` - `0.99` throughout the top 1000 documents. This improvement in consistency can also be attributed to our improvement in `P@10` and `MAP`.
 
-##### Algorithms and Datastructures
+#### Algorithms and Datastructures
 
 Our implementation of the IR system for InferSent utilizies dictonaries and numpy arrays for the ranking and retrieval of the query and document embeddings. As discussed in the previous section, we make use of dictionaries when using our implementation for preprocessing and retrieval to take advantage of the fast indexing the `dict` datastructure has to offer. 
 
 When utilizing the InferSent library, we then had to convert our dictionaries to numpy arrays to remain consistent with the InferSent libraries, though this conversion is made easy with python built-in functions.
 
-##### Project Specific Files
+#### Project Specific Files
 
-###### `main.py`
+##### `main.py`
 
 Responsible for handling the main execution of the program. the main file loads the sentence encoder & pretrained model of the most common 50, 0000 sentences used for InferSent, with 300 feature dimensions, and initializes the InferSent model for query and document embedding.
 
@@ -169,7 +169,7 @@ After the Cosine Similarity has been calculated for all documents with repect to
 
 When each document for each query has been properly ranked, we then write our results using a helper function in `write.py` to achieve our final `Results.txt` for further evalulation with `trec_eval`.
 
-###### `preprocess.py`
+##### `preprocess.py`
 
 A collection of helper functions used in `main.py` for retrieval, formatting and tokenization in preparation to encode our queries and documents using InferSent.
 
@@ -179,23 +179,23 @@ importQuery(): imports query from the collection. Utilizes the same process as t
 
 filterSentence(sentence): Filters sentences from tweets and queries. This function builds a list of stopwords and then tokenizes each word in the sentences by removing any numerics, links, single characters, punctuation, extra spaces or stopwords contained in the list. Each imported tweet and query runs through the NLTK's stopword list, our custom stopword list that included the URLs and abbreviations, and the provided stopword list. After this step, each word is tokenized and stemmed with Porter stemmer. Under the additional libraries section, we discussed in-depth the use of tokenization, stopwords, and porter stemmer. If this function is in bertMode a string in returned with all the remaining words otherwise a tokenized list of all the remaining words are returned. We then rebuild the tokenized string for encoding using InferSent.
 
-###### `write.py`
+##### `write.py`
 
 The `writeResults` is a helper function that creates a table for each of the results generated in the `main.py` and storing the text file in `dist/infersent` directory.
 
-##### Additional Libraries
+#### Additional Libraries
 
-###### Prettytable (prettytable.py):
+##### Prettytable (prettytable.py):
 
 A helper library to format the output for the Results.txt file. Used in the implementation of the write.py.
 
-###### InferSent (`models.py`)
+##### InferSent (`models.py`)
 
 The model for InferSent resides here, pulled from [Facebook Research's Github]( https://github.com/facebookresearch/InferSent).
 
-##### Results for Query 3 & 20
+#### Results for Query 3 & 20
 
-###### Query 3
+##### Query 3
 
 ```
  3         Q0  32273316047757312  1     0.79771817  myRun 
@@ -210,7 +210,7 @@ The model for InferSent resides here, pulled from [Facebook Research's Github]( 
  3         Q0  32878302150529024  10    0.7486612   myRun 
  ```
 
-###### Query 20
+##### Query 20
 
 ```
  20        Q0  33356942797701120  1     0.840229    myRun 
