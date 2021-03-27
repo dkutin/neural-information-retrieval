@@ -19,7 +19,7 @@ Dmitry Kutin
 - README.md sections for InferSent (Approach 2), and Final Discussion for InferSent results.
 
 Dilanga Algama
-- IR Model recreated from Assignment 1, using *BERT* implementation.
+- IR Model recreated from Assignment 1, using a *BERT* model (SentenceTransformer) implementation.
 - Implementation & helper functions in the `bert/` directory.
 - README.md sections for BERT (Approach 1).
 
