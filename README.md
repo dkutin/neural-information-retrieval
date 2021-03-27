@@ -14,27 +14,257 @@ Joshua O Erivwo - 8887065
 
 Dmitry Kutin
 - IR Model reused from Assignment 1, using a *InferSent* (sent2vec) implementation.
+- Implementation & helper functions in the `infersent/` directory.
+- Evaluation script for ease of use across our IR systems.
+- README.md sections for InferSent (Approach 2), and Final Discussion for InferSent results.
 
 Dilanga Algama
-- 
+- IR Model recreated from Assignment 1, using *BERT* implementation.
+- Implementation & helper functions in the `bert/` directory.
+- README.md sections for BERT (Approach 1).
 
 Joshua O Erivwo
-- 
+- ...
 
-## Setting up
+## Neural Retrieval Methods
 
-## Project Overview
+### BERT (Approach 1 - Dilanga Algama)
 
-## Execution
+#### Functionality
 
-## Evaluation
+Our task for this assignment was to implement improved versions of the Information Retrieval (IR) system we created in Assignment 2, for a collection of documents (Twitter messages). A quick recap of what our BERT code does as a whole is as follows:
 
-## Functionality
+We import both the data files, one with the test queries and the other with the list of tweets to format the information to a Python code readable manner and to organize the words for our functions to read (we used dictionaries to store the data). This step also runs the words through a stemming and stop word removal process that basically stems all the words and handles the removal of stop words from the list of words.
 
-## Algorithms, Data Structures, and Optimizations
+We use a BERT model to embed the Query and Document words (tweets) within each sentence. This step is done in batches to soften the load on the CPU when running the whole data set, especially for the 40,000+ documents.
 
-### Project Specific Files
+We calculate the CosSim similarity using the Cosine similairty calculator from the Scipy dictionary to calculate the CosSim for the tweets, to find their similarity score to the query. We order the tweets in a dictionary from highest to lowest similarity score and pass this information to step 4.
 
-### Additional Libraries
+We organize the data created from step 3 and writes the information of the top 1000 for each query in the right order to a `.txt` file (`dist/bert/bert_results.txt`).
 
-## Final Result Discussion
+#### Discussion (Compared to Assignment 1)
+
+Our BERT program did not perform as well as our results in Assignment 1, scoring a `P@10` TREC score of `0.1769` in comparison to `0.1833` which was the score we got for Assignment 1. The `MAP` value for Assignment 1 was `0.1679` and the BERT approach MAP value is `0.0880`. We belive this makes sense due to how BERT calculates the similairity of the different sentences. Firstly, BERT's evaluation changes based on the sequence or order of the words in the sentecen since it looks as the words beside the word, on the left and right during the evaluation, whereas in Assignment 1 the order didn't matter. As long as the document had all the words the query had, it was consider 100% similar, specailly when calculation the cosine similarity. This is the biggest reason we came to based on the final results.
+
+Furthermore there is always possibilities the model misinterpreted the words within the sentences as other developers have mentioned when using the BERT model. Where the BERT approach may result in good scores but its sensitivitly of the answer or understanding in a commonsense scenario as not the same as a person would have when creating the whole picture.
+
+#### Algorithms and Datastructures
+
+Our implementation of the information retrieval system was based on the guidelines provided in assignment 2. The bert folder contains four python files containing the functions used in implementing BERT Neural IR system.
+
+##### Project Specific Files
+
+###### `main.py`:
+In the `main()` function, we started by importing the important functions that were used for implementing the IR system. The first step was to import the tweets and the queries from the `assert folder`. By importing the tweets and queries from the `asset folder`, `step1: preprocessing` was being done using the `filterSentence` that was implemented directly in the `import` function. After importing the tweets and queries from the text and then filtering them.
+Next, 'step2: word embedding' is done where we embed the words from the queries and documents with the BERT model. Once the embedding is done we calculate the Cosine Similarity scores for the word embedded Documents and Queries. To understand what was happening in the `main()` function, we created a set of print statements that would notify the user when the preprocessing and the embedding of the document and queries are done. The user then gets informed of the creation of the BERT result file. 
+
+###### `preprocess.py`:
+ This file contains the process of developing `step1:Preprocessing` using python. Below are the functions implemented in the `preprocess.py`
+
+ - importTweets(bertMode = False): imports the tweets from the collection. We first started by opening the text files, then we filter the file using our filterSentence function. The bertMode variable is for then thw filterSentence function is called.
+
+ - importQuery(bertMode = False): imports query from the collection. Same process as the importTweet(). The bertMode variable is for then thw filterSentence function is called.
+
+ - filterSentence(sen, bertMode = False): Filters sentences from tweets and queries. This function builds a list of `stopwords` and then `tokenizes` each word in the sentences by removing any numerics, links, single characters, punctuation, extra spaces or stopwords contained in the list. Each imported tweet and query runs through the `NLTK's stopword list`, our `custom stopword list` that included the `URLs and abbreviations`, and the provided `stopword list`. After this step, each word is tokenized and stemmed with `Porter stemmer`. Under the `additional libraries` section, we discussed in-depth the use of `tokenization`, `stopwords`, and `porter stemmer`. If this function is in bertMode a string in returned with all thr remaining words otherwise a tokenized list of all the remaining words are returned.
+
+ - listToString(list): Converts a list of words into a string.
+
+###### `write.py`:
+  This file contains the procedure for implementing `step4`. The function creates a table for each of the results generated in the `bert_results.py` and then stores it in the `dist/bert folder` as a text file.
+
+##### Additional Libraries
+
+###### Prettytable (`prettytable.py`):  
+A helper library to format the output for the `Results.txt` file. Used in the implementation of the `write.py`.
+
+#### Results for Query 3 & 20
+
+##### Query 3
+
+```
+Topic_id  Q0  docno              rank  score                tag 
+3         Q0  34410414846517248  1     0.9017896056175232   myRun 
+3         Q0  35088534306033665  2     0.9016108512878418   myRun 
+3         Q0  32910196598636545  3     0.8939297199249268   myRun 
+3         Q0  35032969643175936  4     0.8846487402915955   myRun 
+3         Q0  34728356083666945  5     0.8838127851486206   myRun 
+3         Q0  33254598118473728  6     0.8827221989631653   myRun 
+3         Q0  34982904220237824  7     0.8695272207260132   myRun 
+3         Q0  33711164877701120  8     0.8682869672775269   myRun 
+3         Q0  34896269163896832  9     0.8675245046615601   myRun 
+3         Q0  32809006015713280  10    0.867477297782898    myRun
+```
+##### Query 20
+
+```
+Topic_id  Q0  docno              rank  score                tag 
+20        Q0  33356942797701120  1     0.9473576545715332   myRun 
+20        Q0  32672996137111552  2     0.9401946067810059   myRun 
+20        Q0  33983287403745281  3     0.9358925223350525   myRun 
+20        Q0  34048315318345728  4     0.9331563711166382   myRun 
+20        Q0  29958466130939904  5     0.9306454658508301   myRun 
+20        Q0  29394885203206144  6     0.930182933807373    myRun 
+20        Q0  34137228087136256  7     0.9294392466545105   myRun 
+20        Q0  33290743200092160  8     0.9288673400878906   myRun 
+20        Q0  29105489178529792  9     0.9250818490982056   myRun 
+20        Q0  29341073989967872  10    0.9246830940246582   myRun 
+```
+#### Setting up & Execution
+
+##### Download the BERT model
+Run the following code  below in the terminal to download the BERT model:
+- `pip3 install --user sentence_transformers`
+
+##### Download the other necessary libraries
+Run the following code below in the terminal to download the libaries:
+- `pip3 install --user numpy`
+- `pip3 install --user torch`
+
+##### Run the program
+- To run the BERT approach, call the `main.py` file inside the `/bert` folder after set up steps have been completed with `python3 main.py`
+
+### InterSent (Approach 2 - Dmitry Kutin) 
+
+#### Functionality
+
+In the InferSent approach, we first have to download the provided pre-trained model of 300 dimenension vectors for the first 50, 000 most common words, and InferSent's sentence encoder.
+
+After this, similar to our implementation in Assignment 1, we import & format the list of test queries and documents, tokenized & rebuilt into sentence format for input to the InferSent library. We opted to use an improved tokenization implementation from our first assignment, rather than using InferSent's built in tokenizer and stemmer that uses NLTK.
+
+We then use the InferSent model to embed the queries and documents within each sentence. This step is done by converting our dictionaries of documents and queries into lists, and encoding them with InferSent's pretrained model.
+
+Now that our model is set up, we simply loop through all of our imported queries and documents, and calculate the Cosine Similarity between each Document & Query respectively, and store them to our dictionary of results of the format:
+
+` query_id : {document_id : CosSim, ...} `
+
+for ease of iteration to rank the top 1000 documents. 
+
+We then use the built-in python function `sorted` to sort all 50, 000 documents for each query in decending order, and grab the first 1000 indicies of the resulting list, and save them to our results file (`dist/infersent/infersent_results.txt`) for further evaluation using `trec_eval`. 
+
+#### Discussion (Compared to Assignment 1)
+
+The scores for `MAP` and `P@10` for Assignment 1 we achieved were `0.1679` & `0.1833` respectively, compared to `0.1970` & `0.2735` for the InferSent implementation -- A signification improvement.
+
+InferSent uses a pretrained model of 300 feature dimensions, allowing for better classification of each document with respect to it's query, which we suspect is the reason for our improved scores. Using the `numpy` library, we're also able to take the Cosine Similarity more efficently and effectively across these 300 feature dimensions for each embedded query and document. We were actually able to see an increase in performance when using GPU processing (Taking ~2.3 minutes to rank & retrieve all documents), even having to calculate the dot product between 2 vectors of dimension 300, over 2.5 million times.
+
+We also saw an increase in similarity scores between query and document vectors, with an average confidence of the top 5 queries hovering at `0.9` similarity score, and the lowest being no lower than `0.5`, compared to our Assignment 1 implementation which had provided no consistency in similarity scores often ranging from `0.1` - `0.99` throughout the top 1000 documents. This improvement in consistency can also be attributed to our improvement in `P@10` and `MAP`.
+
+##### Algorithms and Datastructures
+
+Our implementation of the IR system for InferSent utilizies dictonaries and numpy arrays for the ranking and retrieval of the query and document embeddings. As discussed in the previous section, we make use of dictionaries when using our implementation for preprocessing and retrieval to take advantage of the fast indexing the `dict` datastructure has to offer. 
+
+When utilizing the InferSent library, we then had to convert our dictionaries to numpy arrays to remain consistent with the InferSent libraries, though this conversion is made easy with python built-in functions.
+
+##### Project Specific Files
+
+###### `main.py`
+
+Responsible for handling the main execution of the program. the main file loads the sentence encoder & pretrained model of the most common 50, 0000 sentences used for InferSent, with 300 feature dimensions, and initializes the InferSent model for query and document embedding.
+
+Using an improved implementation from our first assignment, we also import all the queries and documents subject to preprocessing and convert them to lists, to be encoded using our InferSent model.
+
+After the initialization process, we then loop through all of our encoded queries and documents, and calculate the Cosine Similarity using `numpy` functions for vector dot products over the previously mentioned 300 feature dimensions, and save this result to our `results` dictionary.
+
+After the Cosine Similarity has been calculated for all documents with repect to a single query, we sort the documents in decending order, and capture the first 1000 indices as per the assignment guidelines. 
+
+When each document for each query has been properly ranked, we then write our results using a helper function in `write.py` to achieve our final `Results.txt` for further evalulation with `trec_eval`.
+
+###### `preprocess.py`
+
+A collection of helper functions used in `main.py` for retrieval, formatting and tokenization in preparation to encode our queries and documents using InferSent.
+
+importTweets(): imports the tweets from the collection. We first started by opening the text files, then we filter the file using our filterSentence function.
+
+importQuery(): imports query from the collection. Utilizes the same process as the importTweet().
+
+filterSentence(sentence): Filters sentences from tweets and queries. This function builds a list of stopwords and then tokenizes each word in the sentences by removing any numerics, links, single characters, punctuation, extra spaces or stopwords contained in the list. Each imported tweet and query runs through the NLTK's stopword list, our custom stopword list that included the URLs and abbreviations, and the provided stopword list. After this step, each word is tokenized and stemmed with Porter stemmer. Under the additional libraries section, we discussed in-depth the use of tokenization, stopwords, and porter stemmer. If this function is in bertMode a string in returned with all the remaining words otherwise a tokenized list of all the remaining words are returned. We then rebuild the tokenized string for encoding using InferSent.
+
+###### `write.py`
+
+The `writeResults` is a helper function that creates a table for each of the results generated in the `main.py` and storing the text file in `dist/infersent` directory.
+
+##### Additional Libraries
+
+###### Prettytable (prettytable.py):
+
+A helper library to format the output for the Results.txt file. Used in the implementation of the write.py.
+
+###### InferSent (`models.py`)
+
+The model for InferSent resides here, pulled from [Facebook Research's Github]( https://github.com/facebookresearch/InferSent).
+
+##### Results for Query 3 & 20
+
+###### Query 3
+
+```
+ 3         Q0  32273316047757312  1     0.79771817  myRun 
+ 3         Q0  29296574815272960  2     0.7946324   myRun 
+ 3         Q0  32383831071793152  3     0.7838675   myRun 
+ 3         Q0  29278582916251649  4     0.7818041   myRun 
+ 3         Q0  29323772183969793  5     0.7660473   myRun 
+ 3         Q0  33711164877701120  6     0.76154566  myRun 
+ 3         Q0  29046646381744129  7     0.75826454  myRun 
+ 3         Q0  32469924240695297  8     0.75596863  myRun 
+ 3         Q0  32488312107175936  9     0.75485104  myRun 
+ 3         Q0  32878302150529024  10    0.7486612   myRun 
+ ```
+
+###### Query 20
+
+```
+ 20        Q0  33356942797701120  1     0.840229    myRun 
+ 20        Q0  34056572233580544  2     0.833139    myRun 
+ 20        Q0  34048315318345728  3     0.833139    myRun 
+ 20        Q0  29913837511647232  4     0.8098888   myRun 
+ 20        Q0  33960436810387456  5     0.80659086  myRun 
+ 20        Q0  29022284970729473  6     0.79709256  myRun 
+ 20        Q0  29902271479287808  7     0.79665387  myRun 
+ 20        Q0  30692965663899648  8     0.7948294   myRun 
+ 20        Q0  30075676803465217  9     0.7934148   myRun 
+ 20        Q0  30283063699177472  10    0.791473    myRun 
+```
+
+#### Setting up & Execution
+
+##### Download necessary libraries
+Run the following code below in the terminal to download the libaries:
+- `pip3 install --user numpy`
+- `pip3 install --user torch`
+- `pip3 install --user nltk`
+
+After installing all required packages, we will also need to download and format the sentence encoder & pretrained model. 
+
+**From the `infersent` directory:**
+
+Download GloVe (V1):
+```
+mkdir GloVe
+curl -Lo GloVe/glove.840B.300d.zip http://nlp.stanford.edu/data/glove.840B.300d.zip
+unzip GloVe/glove.840B.300d.zip -d GloVe/
+```
+
+Download the Sentence Encoder:
+```
+mkdir encoder
+curl -Lo encoder/infersent1.pkl https://dl.fbaipublicfiles.com/infersent/infersent1.pkl
+```
+
+##### Run the program
+- To run the Infersent approach, call the `main.py` file inside the `/infersent` directory after set up steps have been completed with `python3 main.py`.
+
+## Final Result Discussion (InferSent)
+
+Out of the Advanced IR methods we'd experimented with, we found that the InferSent implementation achieved the best results when being evaluated by the `trec_eval` script. 
+
+The `Results.txt` file can be found in the root of the directory. 
+
+For the InferSent approach, all evaluation files for `trec_eval`, and `trec_eval_all_queries`, (as well as a backup of `Results.txt`) can be found in the `dist/infersent` directory. 
+
+We were able to achieve scores for:
+- MAP: `0.1970`
+- P@10: `0.2735`
+
+a considerable improvement from our Assignment 1. 
+
+For more information regarding the InferSent approach, see above for the full breakdown in the `InferSent (Approach 2)` section.
