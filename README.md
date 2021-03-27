@@ -123,7 +123,7 @@ Run the following code below in the terminal to download the libaries:
 ##### Run the program
 - To run the BERT approach, call the `main.py` file inside the `/bert` folder after set up steps have been completed with `python3 main.py`
 
-### InterSent (Approach 2 - Dmitry Kutin) 
+### InferSent (Approach 2 - Dmitry Kutin) 
 
 #### Functionality
 
