@@ -20,7 +20,7 @@ nltk.download('stem.porter')
 ps = PorterStemmer()
 
 # Remove stop words
-with open('./assets/stop_words.txt', 'r') as f:
+with open('../assets/stop_words.txt', 'r') as f:
 	stopWords = [line.strip() for line in f]
 
 def isNumeric(subj):
@@ -44,7 +44,7 @@ def importTweets(verbose = False):
     '''
     tweet_list = dict()
     # Splits tweet list at newline character.
-    tweets = (line.strip('\n') for line in open('./assets/tweet_list.txt', 'r', encoding='utf-8-sig'))
+    tweets = (line.strip('\n') for line in open('../assets/tweet_list.txt', 'r', encoding='utf-8-sig'))
 
     # Build the dictionary.
     for tweet in tweets:
@@ -65,7 +65,7 @@ def importQuery(verbose = False):
     query_list = dict()
     noStem_query_list = dict()
 
-    with open('./assets/test_queries.txt', 'r') as file:
+    with open('../assets/test_queries.txt', 'r') as file:
         fileContents = file.read()
 
     queryCheck = fileContents.strip('\n').split('\n\n')
@@ -95,7 +95,7 @@ def filterSentence(sentence, verbose = False):
     edge_stopwords = ['n\'t', '\'d', 'http', 'https', '//', '...']
 
     # Build a final list of stopwords
-    custom_stopwords = set(stopwords.words('english')).union((line.strip('\r\n') for line in open('./assets/stop_words.txt', 'r'))).union(edge_stopwords)
+    custom_stopwords = set(stopwords.words('english')).union((line.strip('\r\n') for line in open('../assets/stop_words.txt', 'r'))).union(edge_stopwords)
 
     # Create tokens
     tokensNoStem = [word.lower() for word in word_tokenize(sentence)
