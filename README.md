@@ -1,4 +1,4 @@
-## Query Expansion (Approach 3 - Joshua Erivwo
+## Query Expansion (Approach 3 - Joshua Erivwo)
 
 ### Functionality
 Expands the querys by adding synomys of the simalarities of the queries and then calls the functions from the assignment 1 to The reason for the result is due to not implementing the rocchio algorithms whichs deals mostly with the top relevent documents in the IR system. 
