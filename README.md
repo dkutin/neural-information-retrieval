@@ -223,7 +223,9 @@ Run the following code below in the terminal to download the libraries:
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-### InterSent (Approach 3 - Dmitry Kutin) 
+###  (Approach 3 - Dmitry Kutin) 
+
+See Facebook Research's [InferSent project](https://github.com/facebookresearch/InferSent), an implementation of a pre-trained English sentence encoder from [their paper](https://arxiv.org/abs/1705.02364) and SentEval evaluation toolkit.
 
 #### Functionality
 
@@ -243,11 +245,11 @@ We then use the built-in python function `sorted` to sort all 50, 000 documents 
 
 #### Discussion (Compared to Assignment 1)
 
-The scores for `MAP` and `P@10` for Assignment 1 we achieved were `0.1679` & `0.1833` respectively, compared to `0.1970` & `0.2735` for the InferSent implementation -- A signification improvement.
+The scores for `MAP` and `P@10` for Assignment 1 we achieved were `0.1679` & `0.1833` respectively, compared to `0.1970` & `0.2735` for the InferSent implementation -- A significant improvement.
 
-InferSent uses a pre-trained model of 300 feature dimensions, allowing for better classification of each document for the query, which we suspect is the reason for our improved scores. Using the `numpy` library, we're also able to take the Cosine Similarity more efficiently and effectively across these 300 feature dimensions for each embedded query and document. We were able to see an increase in performance when using GPU processing (Taking ~2.3 minutes to rank & retrieve all documents), even having to calculate the dot product between 2 vectors of dimension 300, over 2.5 million times.
+InferSent uses a pre-trained model of 300 feature dimensions, allowing for better classification of each document for the query, which we suspect is the reason for our improved scores. Using the `numpy` library, we're able to take the Cosine Similarity more effectively using each query and document's feature dimensions. We were able to see an increase in performance when using GPU processing (Taking ~2.3 minutes to rank & retrieve all documents), even having to calculate the dot product between 2 vectors of dimension 300, over 2.5 million times (50 queries * 50k documents).
 
-We also saw an increase in similarity scores between query and document vectors, with an average confidence of the top 5 queries hovering at `0.9` similarity score, and the lowest being no lower than `0.5`, compared to our Assignment 1 implementation which had provided no consistency in similarity scores often ranging from `0.1` - `0.99` throughout the top 1000 documents. This can be attributed to our improvement in `P@10` and `MAP`.
+We saw an increase in similarity scores between the query and document vectors, seeing some high similarity scores (`0.82` avg. score top result), and the lowest being no lower than `0.5`. Compared to our Assignment 1 implementation, we had limited consistency in similarity scores, and fewer feature dimensions using just word similarity using the sent2vec implementation. These improvements on similarity scores can also be attributed to our improvement in `P@10` and `MAP`.
 
 #### Algorithms and Datastructures
 
@@ -355,7 +357,7 @@ curl -Lo encoder/infersent1.pkl https://dl.fbaipublicfiles.com/infersent/inferse
 
 ## Final Result Discussion (InferSent)
 
-Out of the Advanced IR methods we'd experimented with, we found that the InferSent implementation achieved the best results when being evaluated by the `trec_eval` script. 
+Out of the Advanced IR methods we'd experimented with, we found that the InferSent (sent2vec) implementation achieved the best results when being evaluated by the `trec_eval` script. 
 
 The `Results.txt` file can be found at the root of the directory. 
 
