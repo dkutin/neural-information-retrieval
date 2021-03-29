@@ -7,6 +7,7 @@ def resultFileCreation(Rankings):
     # Check if the results.txt file exists
     if(path.exists("../dist/query-expansion/query_expansion_results.txt") == False):
         # Initialize the object passing the table headers
+        filename = "../dist/query-expansion/query_expansion_results.txt"
         rTable = PrettyTable(['Topic_id','Q0', 'docno','rank','score','tag'])
         # Align the table to the left of the txt file.
         rTable.align='l'
@@ -31,7 +32,7 @@ def resultFileCreation(Rankings):
         table_text = rTable.get_string()
 
         # Write table to the file after populating the table.
-        f = open("./dist/Results.txt","w+")
+        f = open(filename,"w+")
         f.write(table_text)
 
         # Close Results.txt file.
@@ -39,7 +40,5 @@ def resultFileCreation(Rankings):
         return
     # Remove file if Results.txt file exists and recall the function.
     else:
-        os.remove("../dist/query-expansion/query_expansion_results.txt")
-        resultFileCreation(Rankings)
-
+       print("File exists... Aborting write.")
 

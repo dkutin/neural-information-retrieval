@@ -19,14 +19,13 @@ documents = importTweets()
 queries = importQuery()[1]
 
 
-def getSim(word, syn):   #Finds the simalarity between the queries
+def getSim(word, syn):   #Finds the Similarity between the queries
     tokens = nlp(' '.join([word, syn]))
     simOne, simTwo = tokens[0], tokens[1]
 
     return simOne.similarity(simTwo)
 
-
-    return similarity_matrix.inner_product(simOne, simTwo, normalized=(True, True))
+   
 
 def getSyns(queryList):   # Finds the synonyms for the query
     synonyms=[]
@@ -68,7 +67,7 @@ def main():   # Runs the main for the query expansion
     # Expands the query using the query expansion method
     newQueryDict = dict()
     for queryIndex in queries:
-        print(queryIndex,'/', len(queries))
+        print("Creating the queryExpansion:", queryIndex,'/', len(queries), " ", end = '\r' )
         expanded = expand(queries[queryIndex])
         newQueryDict[queryIndex] = expanded
 

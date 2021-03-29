@@ -67,8 +67,6 @@ def retrieve(query_list, inverted_index, document_length, verbose = False):
             except ZeroDivisionError:
                 continue
 
-        print(doc_cossim)
-
         # Put the ranking of Documents in Descending order into ranking.
         ranking[query_no] = {k: v for k, v in sorted(doc_cossim.items(), key=lambda doc_cossim: doc_cossim[1], reverse=True)}
 
