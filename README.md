@@ -24,9 +24,9 @@ Dilanga Algama
 - README.md sections for BERT (Approach 1).
 
 Joshua O Erivwo
-- IR Model reused from Assignment 1, using query expansion techniques to create a new set oof queries containing synonyms words
+- IR Model reused from Assignment 1, using query expansion techniques to create a new set of queries containing synonyms words
 - Implementation & helper functions in the `query-expansion/` directory.
-- README.md sections for BERT (Approach 2).
+- README.md sections for Query Expansion (Approach 2).
 
 ## Neural Retrieval Methods
 
