@@ -50,7 +50,7 @@ Our BERT program did not perform as well as our results in Assignment 1, scoring
 
 Furthermore, there is always a possibility that the model misinterpreted the words within the sentences as other developers have mentioned when using the BERT model. Where the BERT approach may result in good scores but its sense of the answer or understanding in a commonsense scenario is not the same as a person would have when creating the whole picture for the system.
 
-#### Algorithms and Datastructures
+#### Algorithm and Data structure
 
 Our implementation of the information retrieval system was based on the guidelines provided in assignment 2. The bert folder contains four python files containing the functions used in implementing BERT Neural IR system.
 
