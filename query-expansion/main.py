@@ -75,14 +75,3 @@ def main():   # Runs the main for the query expansion
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
