@@ -367,4 +367,4 @@ We were able to achieve scores for:
 
 a considerable improvement from our Assignment 1. 
 
-For more information regarding the InferSent approach, see above for the full breakdown in the `InferSent (Approach 2)` section.
+For more information regarding the InferSent approach, see above for the full breakdown in the `InferSent (Approach 3)` section.
