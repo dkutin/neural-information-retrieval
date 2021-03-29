@@ -68,7 +68,7 @@ def retrieve(query_list, inverted_index, document_length, verbose = False):
                 continue
 
         # Put the ranking of Documents in Descending order into ranking.
-        ranking[query_no] = {k: v for k, v in sorted(doc_cossim.items(), key=lambda doc_cossim: doc_cossim[1], reverse=True)}
+        ranking[query_no] = {k: v for k, v in sorted(doc_cossim.items(), key=lambda doc_cossim: doc_cossim[1], reverse=True)[:1000]}
 
     if (verbose):
         print('Query Ranking')
