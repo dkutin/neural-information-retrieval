@@ -141,6 +141,7 @@ After the query is expanded, we follow the exact implementation we did earlier i
 #### Discussion (Compared to Assignment 1)
 - From Assignment 1: MAP: 0.1679    ;      P@10: 0.1833
 - From query expansion : MAP: 0.1272    ;      P@10: 0.1149
+
 The MAP and P@10 result from assignment one score is much better than the query expansion score. When expanding a query using synonyms, the recall is increased at the expense of precision.  Studies have been made that show how synonym query expansion can degrade a query performance rather than make it better. 
 In order to have achieved a better result, the Rocchio algorithm's implementation would have helped improve the query expansion, even if it's a little bit. The Rocchio algorithm is mainly referred to as the relevancy feedback where it gets the top relevant document and then implements the query expansion using the top document.
 
